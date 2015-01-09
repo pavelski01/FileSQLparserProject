@@ -10,7 +10,7 @@ public class SqlParser
 		final String GAP = " ";
 		final String selectRegex = 
 			"(?i)\\bSELECT\\b\\s+(.+)\\s+\\bFROM\\b\\s+" +
-				"([\\w\\s,]+?)(?:\\s+\\b(?:WHERE|INNER|ORDER)\\b|;?$);";
+				"([\\w\\s,]+?)(?:\\s+\\b(?:WHERE|INNER|ORDER)\\b|;?)";
 		final Pattern pattern = 
 			Pattern.compile(selectRegex, Pattern.MULTILINE);		
 		StringBuilder stringBuffer = new StringBuilder();
