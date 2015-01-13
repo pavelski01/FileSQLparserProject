@@ -172,15 +172,15 @@ public class MainPanel extends JPanel
 			textArea.addMouseListener(new MouseAdapter() {
 				public void mousePressed(MouseEvent _me)
 				{ if (_me.isPopupTrigger()) doPop(_me); }				
-			    public void mouseReleased(MouseEvent _me)
-			    { if (_me.isPopupTrigger()) doPop(_me); }
+				    public void mouseReleased(MouseEvent _me)
+				{ if (_me.isPopupTrigger()) doPop(_me); }
 			    
-			    private void doPop(MouseEvent _me)
-			    {
-			    	popupMenu.show(
-		    			_me.getComponent(), _me.getX(), _me.getY()
-	    			);
-		    	}
+				private void doPop(MouseEvent _me)
+			    	{
+			    		popupMenu.show(
+		    				_me.getComponent(), _me.getX(), _me.getY()
+    					);
+		    		}
 			});
 			JOptionPane.showMessageDialog(
 				this, textArea, PARSED_QUERY, JOptionPane.PLAIN_MESSAGE
