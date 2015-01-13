@@ -4,20 +4,27 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultEditorKit;
 
 import utility.FileLoader;
 import utility.SqlParser;
@@ -143,14 +150,41 @@ public class MainPanel extends JPanel
 	
 	private void makeParse()
 	{
-		final String EMPTY = "";
+		final String COPY = "Copy", EMPTY = "", PARSED_QUERY = "Parsed query";
 		int selection = this.table.getSelectedRow();
-		String rowValue = EMPTY;
+		String result = EMPTY, rowValue = EMPTY;
+		JTextArea textArea = new JTextArea();
+		final JPopupMenu popupMenu = new JPopupMenu();
+		JMenuItem menuItem = new JMenuItem();
 		if (selection != -1)
 		{
 			rowValue = this.table.getValueAt(selection, 0).toString();
-			String result = SqlParser.parseData(rowValue);
-			System.out.print(result);
+			result = SqlParser.parseData(rowValue);
+			textArea.setText(result);
+			textArea.setEditable(true);
+			textArea.setWrapStyleWord(true);
+			textArea.setLineWrap(true);
+			textArea.setCaretPosition(0);
+			menuItem.setAction(new DefaultEditorKit.CopyAction());
+			menuItem.setMnemonic(KeyEvent.VK_C);
+			menuItem.setText(COPY);
+			popupMenu.add(menuItem);
+			textArea.addMouseListener(new MouseAdapter() {
+				public void mousePressed(MouseEvent _me)
+				{ if (_me.isPopupTrigger()) doPop(_me); }				
+			    public void mouseReleased(MouseEvent _me)
+			    { if (_me.isPopupTrigger()) doPop(_me); }
+			    
+			    private void doPop(MouseEvent _me)
+			    {
+			    	popupMenu.show(
+		    			_me.getComponent(), _me.getX(), _me.getY()
+	    			);
+		    	}
+			});
+			JOptionPane.showMessageDialog(
+				this, textArea, PARSED_QUERY, JOptionPane.PLAIN_MESSAGE
+			);
 		}
 	}
 	
