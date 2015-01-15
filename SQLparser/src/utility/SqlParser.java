@@ -74,7 +74,7 @@ public class SqlParser
 		result = result.toLowerCase();
 		for (String word : keyWords) 
 			if (result.contains(word.toLowerCase()))
-				result = result.replace(word.toLowerCase(), word);
+				result = result.replaceFirst(word.toLowerCase(), word);
 		for (String quote : quotes) result = result.replace(quote.toLowerCase(), quote);
 		return result;
 	}
