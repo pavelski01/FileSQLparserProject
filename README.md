@@ -1,5 +1,5 @@
 FileSqlParserProject
 ====================
 
-Description: SWING GUI application that read data from file and extract sql queries  
-Needs: Runnable jar archive  
+Description: Parse sql queries from file (handwrite)  
+Needs: Exported as runnable jar archive
